@@ -11,19 +11,19 @@
                             <div class="user-menu">
                                 <ul>
                                     <li>
-                                        <a href="#"><i class="fa fa-user"></i> My Account</a>
+                                        <a href="/my/home"><i class="fa fa-user"></i> My Account</a>
                                     </li>
                                     <li>
                                         <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="fa fa-user"></i> My Cart</a>
+                                        <a href="/shop/cart"><i class="fa fa-user"></i> My Cart</a>
                                     </li>
                                     <li>
                                         <a href="#"><i class="fa fa-user"></i>Checkout</a>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="fa fa-user"></i> Login</a>
+                                        <a href="/web/login"><i class="fa fa-user"></i> Login</a>
                                     </li>
                                 </ul>
                             </div>
@@ -80,15 +80,22 @@
                     <div class="col-sm-6">
                         <div class="logo">
                         <h1>
-                            <a href="index.html">e<span>Electronics</span></a>
+                            <a href="/">e<span>Electronics</span></a>
                         </h1>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$800</span>
-                        <i class="fa fa-shopping-cart"></i> <span
-                        class="product-count">5</span></a>
+                        <t t-set="website_sale_order" t-value="website.sale_get_order()" />
+                        
+                        <a href="/shop/cart">Cart -
+                            <span t-if="website_sale_order.amount_untaxed > 0" class="cart-amunt" t-field="website_sale_order.amount_untaxed" style="white-space: nowrap;" t-options="{'widget': 'monetary','from_currency': website_sale_order.pricelist_id.currency_id,'display_currency': website.currency_id}" />
+                            <span t-else="">Nothing yet!</span>
+                            <i class="fa fa-shopping-cart"></i> 
+                            <span t-att-class="'product-count my_cart_quantity' if website_sale_order and website_sale_order.cart_quantity else 'hidden'">
+                                <t t-esc="website_sale_order and website_sale_order.cart_quantity or ''" />
+                            </span>
+                        </a>
                         </div>
                     </div>
                     </div>
